@@ -1,7 +1,7 @@
 package com.huipa.huipa.controller;
 
-import com.huipa.huipa.dto.CategoryRequestDTO;
-import com.huipa.huipa.dto.CategoryResponseDTO;
+import com.huipa.huipa.dtos.CategoryRequestDTO;
+import com.huipa.huipa.dtos.CategoryResponseDTO;
 import com.huipa.huipa.service.CategoryService;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;

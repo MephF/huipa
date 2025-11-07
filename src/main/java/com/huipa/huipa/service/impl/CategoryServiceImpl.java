@@ -1,7 +1,7 @@
 package com.huipa.huipa.service.impl;
 
-import com.huipa.huipa.dto.CategoryRequestDTO;
-import com.huipa.huipa.dto.CategoryResponseDTO;
+import com.huipa.huipa.dtos.CategoryRequestDTO;
+import com.huipa.huipa.dtos.CategoryResponseDTO;
 import com.huipa.huipa.entity.Category;
 import com.huipa.huipa.repository.CategoryRepository;
 import com.huipa.huipa.service.CategoryService;

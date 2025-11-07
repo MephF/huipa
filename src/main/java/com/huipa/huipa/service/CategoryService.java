@@ -2,8 +2,8 @@ package com.huipa.huipa.service;
 
 import java.util.List;
 
-import com.huipa.huipa.dto.CategoryRequestDTO;
-import com.huipa.huipa.dto.CategoryResponseDTO;
+import com.huipa.huipa.dtos.CategoryRequestDTO;
+import com.huipa.huipa.dtos.CategoryResponseDTO;
 
 public interface CategoryService { 
     
