@@ -8,7 +8,7 @@ import java.util.Optional;
 
 @Repository
 public interface CategoryRepository extends JpaRepository<Category, Long> {
-    
+     
     /**
      * Busca una categoría por su nombre
      * @param nombre Nombre de la categoría

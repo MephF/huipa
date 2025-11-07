@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 
 import java.time.OffsetDateTime;
 
-@Data
+@Data 
 @NoArgsConstructor
 @AllArgsConstructor
 public class CategoryResponseDTO {

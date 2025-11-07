@@ -62,7 +62,7 @@ public class CategoryController {
             return ResponseEntity.status(HttpStatus.CONFLICT).build();
         }
     }
-    
+     
     /* Elimina una categoría por su ID */
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteCategory(@PathVariable Long id) {

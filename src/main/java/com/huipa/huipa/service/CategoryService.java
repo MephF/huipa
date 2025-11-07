@@ -5,7 +5,7 @@ import java.util.List;
 import com.huipa.huipa.dto.CategoryRequestDTO;
 import com.huipa.huipa.dto.CategoryResponseDTO;
 
-public interface CategoryService {
+public interface CategoryService { 
     
     /* Crea una nueva categoría */
     CategoryResponseDTO createCategory(CategoryRequestDTO requestDTO);
