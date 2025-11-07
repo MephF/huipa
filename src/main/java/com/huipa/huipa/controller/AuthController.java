@@ -1,6 +1,6 @@
 package com.huipa.huipa.controller;
 
-import com.huipa.huipa.dtos.UserRegistrationDto;
+import com.huipa.huipa.dto.UserRegistrationDto;
 import com.huipa.huipa.entity.User;
 import com.huipa.huipa.service.UserService;
 import jakarta.validation.Valid;

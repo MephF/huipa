@@ -1,4 +1,4 @@
-package com.huipa.huipa.dtos;
+package com.huipa.huipa.dto;
 
 import com.huipa.huipa.enums.UserRole;
 import jakarta.validation.constraints.Email;
