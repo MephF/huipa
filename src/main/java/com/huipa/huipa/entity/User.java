@@ -8,6 +8,8 @@ import jakarta.validation.constraints.Size;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.annotations.JdbcTypeCode; // Import for JdbcTypeCode
+import org.hibernate.type.SqlTypes; // Import for SqlTypes
 
 import java.time.OffsetDateTime;
 import java.util.UUID;
@@ -21,6 +23,7 @@ public class User {
     @Column(name = "user_id")
     private UUID userId;
 
+    @NotNull(message = "El teléfono no puede estar vacío")
     @Size(max = 20)
     @Column(name = "telefono", length = 20)
     private String telefono;
@@ -44,7 +47,8 @@ public class User {
     private String fotoPerfilUrl;
 
     @NotNull
-    @Enumerated(EnumType.STRING)
+    @Enumerated(EnumType.STRING) // Keep this for consistency, though JdbcTypeCode takes precedence
+    @JdbcTypeCode(SqlTypes.NAMED_ENUM) // This is the key for PostgreSQL ENUM mapping
     @Column(name = "role", nullable = false)
     private UserRole role;
 
