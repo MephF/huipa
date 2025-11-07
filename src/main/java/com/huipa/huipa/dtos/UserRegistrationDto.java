@@ -5,8 +5,11 @@ import com.huipa.huipa.validation.ArtesanoRegistration;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Past; // Import for @Past
 import jakarta.validation.constraints.Size;
 import lombok.Data;
+
+import java.time.LocalDate; // Import for LocalDate
 
 @Data
 public class UserRegistrationDto {
@@ -31,6 +34,17 @@ public class UserRegistrationDto {
     private String telefono;
 
     private String fotoPerfilUrl; // Opcional para todos
+
+    @NotNull(message = "La fecha de nacimiento no puede estar vacía")
+    @Past(message = "La fecha de nacimiento debe ser en el pasado") // Ensures date is in the past
+    private LocalDate fechaNacimiento;
+
+    @NotBlank(message = "El lugar de residencia no puede estar vacío")
+    @Size(max = 255, message = "El lugar de residencia no puede exceder los 255 caracteres")
+    private String lugarResidencia;
+
+    @NotBlank(message = "La dirección no puede estar vacía")
+    private String direccion;
 
     // Campos específicos para Artesano
     @NotBlank(message = "La historia de vida no puede estar vacía para un artesano", groups = ArtesanoRegistration.class)

@@ -46,7 +46,6 @@ public class UserServiceImpl implements UserService {
         if (userRepository.findByEmail(registrationDto.getEmail()).isPresent()) {
             throw new IllegalArgumentException("El email ya está registrado.");
         }
-        // Also check if phone number is already registered
         if (userRepository.findByTelefono(registrationDto.getTelefono()).isPresent()) {
             throw new IllegalArgumentException("El número de teléfono ya está registrado.");
         }
@@ -58,6 +57,9 @@ public class UserServiceImpl implements UserService {
         newUser.setPasswordHash(passwordEncoder.encode(registrationDto.getPassword()));
         newUser.setRole(registrationDto.getRole());
         newUser.setFotoPerfilUrl(registrationDto.getFotoPerfilUrl());
+        newUser.setFechaNacimiento(registrationDto.getFechaNacimiento()); // Set fechaNacimiento
+        newUser.setLugarResidencia(registrationDto.getLugarResidencia()); // Set lugarResidencia
+        newUser.setDireccion(registrationDto.getDireccion()); // Set direccion
 
         if (newUser.getRole() == UserRole.ARTESANO) {
             Set<ConstraintViolation<UserRegistrationDto>> violations = validator.validate(registrationDto, ArtesanoRegistration.class);
@@ -95,7 +97,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User loginUser(UserLoginDto loginDto) {
-        User user = userRepository.findByTelefono(loginDto.getTelefono()) // Changed from findByEmail to findByTelefono
+        User user = userRepository.findByTelefono(loginDto.getTelefono())
                 .orElseThrow(() -> new IllegalArgumentException("Credenciales inválidas."));
 
         if (!passwordEncoder.matches(loginDto.getPassword(), user.getPasswordHash())) {

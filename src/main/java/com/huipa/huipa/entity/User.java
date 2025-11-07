@@ -8,9 +8,10 @@ import jakarta.validation.constraints.Size;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-import org.hibernate.annotations.JdbcTypeCode; // Import for JdbcTypeCode
-import org.hibernate.type.SqlTypes; // Import for SqlTypes
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
 
+import java.time.LocalDate; // Import for LocalDate
 import java.time.OffsetDateTime;
 import java.util.UUID;
 
@@ -47,10 +48,22 @@ public class User {
     private String fotoPerfilUrl;
 
     @NotNull
-    @Enumerated(EnumType.STRING) // Keep this for consistency, though JdbcTypeCode takes precedence
-    @JdbcTypeCode(SqlTypes.NAMED_ENUM) // This is the key for PostgreSQL ENUM mapping
+    @JdbcTypeCode(SqlTypes.NAMED_ENUM)
     @Column(name = "role", nullable = false)
     private UserRole role;
+
+    @NotNull(message = "La fecha de nacimiento no puede estar vacía")
+    @Column(name = "fecha_nacimiento", nullable = false)
+    private LocalDate fechaNacimiento;
+
+    @NotNull(message = "El lugar de residencia no puede estar vacío")
+    @Size(max = 255)
+    @Column(name = "lugar_residencia", nullable = false, length = 255)
+    private String lugarResidencia;
+
+    @NotNull(message = "La dirección no puede estar vacía")
+    @Column(name = "direccion", nullable = false, columnDefinition = "TEXT")
+    private String direccion;
 
     @CreationTimestamp
     @Column(name = "created_at", nullable = false, updatable = false)
