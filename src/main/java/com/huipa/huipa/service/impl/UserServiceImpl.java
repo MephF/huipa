@@ -1,6 +1,7 @@
 package com.huipa.huipa.service.impl;
 
-import com.huipa.huipa.dto.UserRegistrationDto;
+import com.huipa.huipa.dtos.UserLoginDto;
+import com.huipa.huipa.dtos.UserRegistrationDto;
 import com.huipa.huipa.enums.UserRole;
 import com.huipa.huipa.entity.ArtesanoDetails;
 import com.huipa.huipa.entity.Negocio;
@@ -25,7 +26,7 @@ public class UserServiceImpl implements UserService {
     private final ArtesanoDetailsRepository artesanoDetailsRepository;
     private final NegocioRepository negocioRepository;
     private final BCryptPasswordEncoder passwordEncoder;
-    private final Validator validator; // Inject Validator
+    private final Validator validator;
 
     public UserServiceImpl(UserRepository userRepository,
                            ArtesanoDetailsRepository artesanoDetailsRepository,
@@ -45,16 +46,19 @@ public class UserServiceImpl implements UserService {
         if (userRepository.findByEmail(registrationDto.getEmail()).isPresent()) {
             throw new IllegalArgumentException("El email ya está registrado.");
         }
+        // Also check if phone number is already registered
+        if (userRepository.findByTelefono(registrationDto.getTelefono()).isPresent()) {
+            throw new IllegalArgumentException("El número de teléfono ya está registrado.");
+        }
 
         User newUser = new User();
         newUser.setEmail(registrationDto.getEmail());
         newUser.setNombre(registrationDto.getNombre());
-        newUser.setTelefono(registrationDto.getTelefono()); // Set telefono
+        newUser.setTelefono(registrationDto.getTelefono());
         newUser.setPasswordHash(passwordEncoder.encode(registrationDto.getPassword()));
         newUser.setRole(registrationDto.getRole());
-        newUser.setFotoPerfilUrl(registrationDto.getFotoPerfilUrl()); // Set fotoPerfilUrl
+        newUser.setFotoPerfilUrl(registrationDto.getFotoPerfilUrl());
 
-        // Perform conditional validation for Artesano
         if (newUser.getRole() == UserRole.ARTESANO) {
             Set<ConstraintViolation<UserRegistrationDto>> violations = validator.validate(registrationDto, ArtesanoRegistration.class);
             if (!violations.isEmpty()) {
@@ -69,13 +73,11 @@ public class UserServiceImpl implements UserService {
         User savedUser = userRepository.save(newUser);
 
         if (savedUser.getRole() == UserRole.ARTESANO) {
-            // Create ArtesanoDetails
             ArtesanoDetails artesanoDetails = new ArtesanoDetails();
             artesanoDetails.setUser(savedUser);
             artesanoDetails.setHistoriaVida(registrationDto.getHistoriaVida());
             artesanoDetailsRepository.save(artesanoDetails);
 
-            // Create Negocio
             Negocio negocio = new Negocio();
             negocio.setArtesanoUser(savedUser);
             negocio.setNombreNegocio(registrationDto.getNombreNegocio());
@@ -89,5 +91,16 @@ public class UserServiceImpl implements UserService {
         }
 
         return savedUser;
+    }
+
+    @Override
+    public User loginUser(UserLoginDto loginDto) {
+        User user = userRepository.findByTelefono(loginDto.getTelefono()) // Changed from findByEmail to findByTelefono
+                .orElseThrow(() -> new IllegalArgumentException("Credenciales inválidas."));
+
+        if (!passwordEncoder.matches(loginDto.getPassword(), user.getPasswordHash())) {
+            throw new IllegalArgumentException("Credenciales inválidas.");
+        }
+        return user;
     }
 }

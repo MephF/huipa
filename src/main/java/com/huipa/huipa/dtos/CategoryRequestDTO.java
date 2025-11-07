@@ -1,4 +1,4 @@
-package com.huipa.huipa.dto;
+package com.huipa.huipa.dtos;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;

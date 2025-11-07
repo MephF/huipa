@@ -1,4 +1,4 @@
-package com.huipa.huipa.dto;
+package com.huipa.huipa.dtos;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

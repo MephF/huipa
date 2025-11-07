@@ -1,4 +1,4 @@
-package com.huipa.huipa.dto;
+package com.huipa.huipa.dtos;
 
 import com.huipa.huipa.enums.UserRole;
 import com.huipa.huipa.validation.ArtesanoRegistration;
