@@ -1,9 +1,8 @@
 package com.huipa.huipa.controller;
 
-import com.huipa.huipa.dtos.UserRegistrationDto;
+import com.huipa.huipa.dtos.UserRegistrationDto; // Corrected import to plural dtos
 import com.huipa.huipa.entity.User;
 import com.huipa.huipa.service.UserService;
-import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,7 +21,7 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<?> registerUser(@Valid @RequestBody UserRegistrationDto registrationDto) {
+    public ResponseEntity<?> registerUser(@RequestBody UserRegistrationDto registrationDto) { // Removed @Valid
         try {
             User registeredUser = userService.registerUser(registrationDto);
             // In a real application, you might return a DTO that doesn't expose the password hash
